@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çıkalım mı?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-container">
+        <h1 id="question">ÇIKALIM MI?</h1>
+        <div class="buttons">
+            <button id="yes-btn" onclick="celebrate()">EVET</button>
+            <button id="no-btn">HAYIR</button>
+        </div>
+    </div>
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        noBtn.addEventListener('mouseover', () => {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+        function celebrate() {
+            document.getElementById('main-container').innerHTML = `
+                <h1 style="font-size: 6rem; color: #e91e63;">WUHUHUHUHUHHUUH</h1>
+                <div style="font-size: 3rem;">🎉🥳✨</div>
+            `;
+            document.body.style.backgroundColor = "#ffeb3b";
+        }
+    </script>
+</body>
+</html>
