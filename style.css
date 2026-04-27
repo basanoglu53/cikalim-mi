@@ -42,4 +42,16 @@ button {
 #no-btn {
     background-color: #f44336;
     color: white;
+}@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5rem !important;
+        margin-bottom: 1.5rem;
+    }
+    button {
+        padding: 12px 30px !important;
+        font-size: 1.2rem !important;
+    }
+    .buttons {
+        gap: 15px;
+    }
 }
