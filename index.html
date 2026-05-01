@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head><script async src="https://www.googletagmanager.com/gtag/js?id=G-2HBENM0X4S"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2HBENM0X4S"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2HBENM0X4S');
+    </script>
 
-  gtag('config', 'G-2HBENM0X4S');
-</script>
+    <!-- Konfeti Kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Çıkalım mı?</title>
@@ -21,23 +26,61 @@
             <button id="no-btn">HAYIR</button>
         </div>
     </div>
+
     <script>
         const noBtn = document.getElementById('no-btn');
+        
+        // Kaçan Buton Mantığı
         noBtn.addEventListener('mouseover', () => {
             const maxX = window.innerWidth - noBtn.offsetWidth;
             const maxY = window.innerHeight - noBtn.offsetHeight;
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
+            
             noBtn.style.position = 'absolute';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         });
+
+        // Ultra Gerçekçi Kutlama Fonksiyonu
         function celebrate() {
+            // 1. Konfeti Yağmuru (3 Saniye Sürer)
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#e91e63', '#ffeb3b', '#4CAF50']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#e91e63', '#ffeb3b', '#4CAF50']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // 2. Arayüz Değişimi
             document.getElementById('main-container').innerHTML = `
-                <h1 style="font-size: 6rem; color: #e91e63;">WUHUHUHUHUHHUUH</h1>
-                <div style="font-size: 3rem;">🎉🥳✨</div>
+                <h1 style="font-size: 6rem; color: #e91e63; animation: pop 0.5s ease-out;">WUHUHUHUHUHHUUH</h1>
+                <div style="font-size: 5rem;">🥳💖✨</div>
             `;
             document.body.style.backgroundColor = "#ffeb3b";
+            
+            // Analytics'e "Evet'e basıldı" bilgisini gönder (Opsiyonel)
+            gtag('event', 'click', {
+                'event_category': 'engagement',
+                'event_label': 'Evet Butonu'
+            });
         }
     </script>
 </body>
