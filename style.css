@@ -20,25 +20,29 @@ body {
 .step {
     display: none;
     width: 100%;
-    max-width: 500px;
-    padding: 20px;
-    animation: fadeIn 0.5s ease-in-out;
+    max-width: 450px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.4s ease-in-out;
+    margin: 15px;
 }
 
 .step.active {
     display: block;
 }
 
-/* Başlık */
+/* Başlıklar */
 .main-title {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: #e91e63;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
 
-/* Buton Düzeni */
+/* Buton Düzenleri */
 .buttons-wrapper {
     display: flex;
     justify-content: center;
@@ -49,7 +53,7 @@ body {
 
 #yes-btn, #no-btn {
     padding: 15px 35px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     border: none;
     border-radius: 50px;
@@ -60,21 +64,47 @@ body {
 #yes-btn {
     background-color: #4CAF50;
     color: white;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
-#yes-btn:hover {
-    transform: scale(1.1);
-}
+#yes-btn:hover { transform: scale(1.1); }
 
 #no-btn {
     background-color: #f44336;
     color: white;
-    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
     z-index: 999;
 }
 
+/* Kategori Ekranı Butonları (2. ADIM) */
+.category-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.sub-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background-color: #e91e63;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(233, 30, 99, 0.2);
+}
+
+.sub-btn:hover {
+    transform: scale(1.03);
+    background-color: #c2185b;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
