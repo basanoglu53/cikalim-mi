@@ -91,35 +91,23 @@
             butonunKacmasi();
         });
 
+        // 🌟 DÜZELTİLEN BÖLÜM: 2D EMOJİ KONFETİ AYARI 🌟
+        const seftaliShape = confetti.shapeFromText({ text: '🍑', scalar: 3 });
         let rainInterval;
+
         function seftaliYagmuru() {
-            const peachImgUrl = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food%20and%20Drink/Peach.png";
             rainInterval = setInterval(() => {
-                for(let i=0; i<2; i++) {
-                    const peach = document.createElement("img");
-                    peach.src = peachImgUrl;
-                    peach.style.position = "fixed";
-                    peach.style.top = "-100px";
-                    peach.style.zIndex = "9999";
-                    peach.style.pointerEvents = "none";
-                    peach.style.filter = "drop-shadow(0px 15px 15px rgba(0,0,0,0.3))";
-                    const size = Math.random() * 50 + 50; 
-                    peach.style.width = size + "px";
-                    peach.style.left = (Math.random() * window.innerWidth) + "px";
-                    document.body.appendChild(peach);
-                    
-                    const fallDuration = Math.random() * 3000 + 4000;
-                    const randomRotation = Math.floor(Math.random() * 500) * (Math.random() > 0.5 ? 1 : -1);
-                    
-                    const animation = peach.animate([
-                        { transform: 'translateY(0) rotate(0deg)', opacity: 0 },
-                        { opacity: 1, offset: 0.1 },
-                        { opacity: 1, offset: 0.8 },
-                        { transform: `translateY(${window.innerHeight + 200}px) rotate(${randomRotation}deg)`, opacity: 0 }
-                    ], { duration: fallDuration, easing: 'linear' });
-                    animation.onfinish = () => peach.remove();
-                }
-            }, 300);
+                confetti({
+                    particleCount: 2,
+                    angle: 270,
+                    spread: 80,
+                    origin: { x: Math.random(), y: -0.1 },
+                    shapes: [seftaliShape], // Resim değil emoji kullanıyoruz
+                    scalar: Math.random() * 1.5 + 1.5,
+                    gravity: 0.7,
+                    ticks: 350
+                });
+            }, 200);
         }
 
         function nextStep(stepNumber) {
@@ -151,7 +139,7 @@
                 nextStep(4);
             })
             .catch(() => {
-                // FormSubmit ilk seferde bir doğrulama maili atabilir, arka planda sorun çıkarsa direkt yönlendiriyoruz
+                // Hata oluşursa formu normal şekilde gönderiyoruz
                 form.submit();
             });
         });
