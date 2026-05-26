@@ -19,8 +19,9 @@
 <body>
 
     <form name="randevu-formu" method="POST" data-netlify="true" id="appointment-form">
+        <input type="hidden" name="form-name" value="randevu-formu" />
         
-        <div id="step-1" class="step active">
+        <div id="step-1" class="step active unboxed">
             <h1 class="main-title">ÇIKALIM MI?</h1>
             <div class="buttons-wrapper">
                 <button type="button" id="yes-btn" onclick="nextStep(2)">EVET</button>
@@ -28,7 +29,7 @@
             </div>
         </div>
 
-        <div id="step-2" class="step">
+        <div id="step-2" class="step unboxed">
             <h1 class="main-title" style="font-size: 2.5rem;">WUHUHUHUHUHHUUH! 🥳</h1>
             <h3 style="color: #e91e63; margin-bottom: 25px; font-size: 1.5rem;">Peki ne yapmak istersin?</h3>
             
@@ -41,15 +42,33 @@
             </div>
         </div>
 
-        <div id="step-3" class="step">
+        <div id="step-3" class="step unboxed">
+            <h1 class="main-title" style="font-size: 2.5rem;">MÜKEMMEL! 🗓️</h1>
+            <h3 style="color: #e91e63; margin-bottom: 20px; font-size: 1.3rem;">Zamanı ayarlayalım:</h3>
+            
+            <div class="inputs-container">
+                <label class="input-label">Müsait Olduğun Günler:</label>
+                <input type="text" name="musait_gunler" class="input-field" placeholder="Örn: Hafta sonu, Pazartesi veya Çarşamba" required>
+                
+                <label class="input-label">İş Çıkış Saatlerin:</label>
+                <input type="text" name="cikis_saati" class="input-field" placeholder="Örn: 18:30'dan sonra, tüm gün" required>
+                
+                <button type="submit" class="submit-btn">Planı Tamamla! 🚀</button>
             </div>
+        </div>
+
+        <div id="step-4" class="step unboxed">
+            <h1 class="main-title" style="font-size: 3rem; color: #4CAF50;">PLAN HAZIR! 🍑✨</h1>
+            <h2 style="color: #e91e63; margin-top: 20px;">Bilgiler bana ışık hızıyla ulaştı. Sabırsızlıkla bekliyorum! En yakın zamanda sendeyim.</h2>
+        </div>
 
     </form>
 
     <script>
         const noBtn = document.getElementById('no-btn');
+        const form = document.getElementById('appointment-form');
         
-        // Kaçan Buton Fonksiyonu (Hem PC hem Telefon uyumlu)
+        // Kaçan Buton Fonksiyonu (PC & Mobil Uyumlu)
         function butonunKacmasi() {
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
@@ -68,33 +87,23 @@
             butonunKacmasi();
         });
 
-        // 🍑 Emojiyi Şekil Olarak Tanımlıyoruz
-        const seftali = confetti.shapeFromText({ text: '🍑', scalar: 3 });
+        // 🍑 Şeftali Emojisi Konfeti Ayarı
+        const seftali = confetti.shapeFromText({ text: '🍑', scalar: 4 });
+        let rainInterval;
 
-        // Sürekli Aşağı Düşen Şeftali Yağmuru Fonksiyonu
         function seftaliYagmuru() {
-            const duration = 6 * 1000; // 6 saniye boyunca şeftali yağacak
-            const end = Date.now() + duration;
-
-            (function frame() {
+            rainInterval = setInterval(() => {
                 confetti({
-                    particleCount: 2, 
-                    angle: 270, // Yönü direkt aşağı doğru
-                    spread: 90,
-                    origin: { 
-                        x: Math.random(), // Rastgele yatay konum
-                        y: -0.1 // Ekranın hemen üstü
-                    },
-                    shapes: [seftali], 
-                    scalar: Math.random() * 1.5 + 1.5, // Rastgele boyutlar
-                    gravity: 0.8, // Düşme hızı
-                    ticks: 300 
+                    particleCount: 2,
+                    angle: 270,
+                    spread: 80,
+                    origin: { x: Math.random(), y: -0.1 },
+                    shapes: [seftali],
+                    scalar: Math.random() * 2 + 2,
+                    gravity: 0.7,
+                    ticks: 350
                 });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
+            }, 200);
         }
 
         // Adımlar Arası Geçiş
@@ -104,16 +113,37 @@
             });
             document.getElementById('step-' + stepNumber).classList.add('active');
 
-            if(stepNumber === 2) {
-                seftaliYagmuru(); // "EVET"e basılınca şeftaliler yağmaya başlasın!
+            if(stepNumber === 2 && !rainInterval) {
+                seftaliYagmuru(); // Evet deyince şeftaliler yağmaya başlar ve durmaz
             }
         }
 
-        // Kategori Seçme Fonksiyonu
+        // Kategori Seçimi
         function selectCategory(categoryName) {
             document.getElementById('selected-category').value = categoryName;
-            alert("Harika! Seçtiğin kategori akılda tutuldu: " + categoryName + "\nŞimdi son adım olan gün/saat panelini yapmaya hazırız!");
+            nextStep(3); // Direkt 3. adıma zıplar
         }
+
+        // Formu Arka Planda (AJAX) Gönderme Sihri
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Sayfa yenilenmesini engelle
+            
+            const formData = new FormData(form);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Gönderim başarılı olunca çılgın bir bitiş patlaması yap ve 4. adıma geç
+                confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+                nextStep(4);
+            })
+            .catch((error) => {
+                alert("Ufak bir hata oluştu dostum, tekrar dener misin?: " + error);
+            });
+        });
     </script>
 </body>
 </html>
