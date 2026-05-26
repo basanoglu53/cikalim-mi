@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2HBENM0X4S"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -10,77 +9,69 @@
       gtag('config', 'G-2HBENM0X4S');
     </script>
 
-    <!-- Konfeti Kütüphanesi -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Çıkalım mı?</title>
+    <title>Küçük Bir Soru... 😉</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main-container">
-        <h1 id="question">ÇIKALIM MI?</h1>
-        <div class="buttons">
-            <button id="yes-btn" onclick="celebrate()">EVET</button>
-            <button id="no-btn">HAYIR</button>
+
+    <form name="randevu-formu" method="POST" data-netlify="true" id="appointment-form">
+        
+        <div id="step-1" class="step active">
+            <h1 class="main-title">ÇIKALIM MI?</h1>
+            <div class="buttons-wrapper">
+                <button type="button" id="yes-btn" onclick="nextStep(2)">EVET</button>
+                <button type="button" id="no-btn">HAYIR</button>
+            </div>
         </div>
-    </div>
+
+        <div id="step-2" class="step">
+            </div>
+
+        <div id="step-3" class="step">
+            </div>
+
+    </form>
 
     <script>
         const noBtn = document.getElementById('no-btn');
         
-        // Kaçan Buton Mantığı
-        noBtn.addEventListener('mouseover', () => {
-            const maxX = window.innerWidth - noBtn.offsetWidth;
-            const maxY = window.innerHeight - noBtn.offsetHeight;
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+        // Kaçan Buton Fonksiyonu (Hem PC hem Telefon uyumlu)
+        function butonunKacmasi() {
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
-            noBtn.style.position = 'absolute';
+            const randomX = Math.floor(Math.random() * Math.max(10, maxX));
+            const randomY = Math.floor(Math.random() * Math.max(10, maxY));
+            
+            noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+        }
+
+        // Bilgisayarlar için fare gelince kaç
+        noBtn.addEventListener('mouseover', butonunKacmasi);
+
+        // Telefonlar için parmak dokununca kaç
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Dokunup tıklamasını engeller, direkt kaçırır
+            butonunKacmasi();
         });
 
-        // Ultra Gerçekçi Kutlama Fonksiyonu
-        function celebrate() {
-            // 1. Konfeti Yağmuru (3 Saniye Sürer)
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
-
-            (function frame() {
-                confetti({
-                    particleCount: 7,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#e91e63', '#ffeb3b', '#4CAF50']
-                });
-                confetti({
-                    particleCount: 7,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#e91e63', '#ffeb3b', '#4CAF50']
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-
-            // 2. Arayüz Değişimi
-            document.getElementById('main-container').innerHTML = `
-                <h1 style="font-size: 6rem; color: #e91e63; animation: pop 0.5s ease-out;">WUHUHUHUHUHHUUH</h1>
-                <div style="font-size: 5rem;">🥳💖✨</div>
-            `;
-            document.body.style.backgroundColor = "#ffeb3b";
-            
-            // Analytics'e "Evet'e basıldı" bilgisini gönder (Opsiyonel)
-            gtag('event', 'click', {
-                'event_category': 'engagement',
-                'event_label': 'Evet Butonu'
+        // Adımlar Arası Geçiş Fonksiyonu
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
             });
+            document.getElementById('step-' + stepNumber).classList.add('active');
+
+            // EVET'e basılınca ilk konfeti patlaması
+            if(stepNumber === 2) {
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            }
         }
     </script>
 </body>
