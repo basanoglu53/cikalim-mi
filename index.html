@@ -29,7 +29,17 @@
         </div>
 
         <div id="step-2" class="step">
+            <h1 class="main-title" style="font-size: 2.5rem;">WUHUHUHUHUHHUUH! 🥳</h1>
+            <h3 style="color: #e91e63; margin-bottom: 20px; font-size: 1.5rem;">Peki ne yapmak istersin?</h3>
+            
+            <input type="hidden" name="kategori" id="selected-category" value="">
+            
+            <div class="category-buttons">
+                <button type="button" class="sub-btn" onclick="selectCategory('Besle Beni 🍕')">BESLE BENİ</button>
+                <button type="button" class="sub-btn" onclick="selectCategory('Çay & Kahve & Tatlı ☕')">ÇAY KAHVE TATLI</button>
+                <button type="button" class="sub-btn" onclick="selectCategory('Hepsi! ✨')">HEPSİ</button>
             </div>
+        </div>
 
         <div id="step-3" class="step">
             </div>
@@ -39,7 +49,7 @@
     <script>
         const noBtn = document.getElementById('no-btn');
         
-        // Kaçan Buton Fonksiyonu (Hem PC hem Telefon uyumlu)
+        // Kaçan Buton Fonksiyonu
         function butonunKacmasi() {
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
@@ -52,26 +62,28 @@
             noBtn.style.top = randomY + 'px';
         }
 
-        // Bilgisayarlar için fare gelince kaç
         noBtn.addEventListener('mouseover', butonunKacmasi);
-
-        // Telefonlar için parmak dokununca kaç
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Dokunup tıklamasını engeller, direkt kaçırır
+            e.preventDefault();
             butonunKacmasi();
         });
 
-        // Adımlar Arası Geçiş Fonksiyonu
+        // Adımlar Arası Geçiş
         function nextStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
             document.getElementById('step-' + stepNumber).classList.add('active');
 
-            // EVET'e basılınca ilk konfeti patlaması
             if(stepNumber === 2) {
                 confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             }
+        }
+
+        // Kategori Seçme Fonksiyonu
+        function selectCategory(categoryName) {
+            document.getElementById('selected-category').value = categoryName;
+            alert("Seçtiğin kategori akılda tutuldu: " + categoryName + "\nŞimdi 3. adımı yapmaya hazırız!");
         }
     </script>
 </body>
