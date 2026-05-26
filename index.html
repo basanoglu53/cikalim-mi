@@ -18,8 +18,11 @@
 </head>
 <body>
 
-    <form name="randevu-formu" method="POST" data-netlify="true" id="appointment-form">
-        <input type="hidden" name="form-name" value="randevu-formu" />
+    <form action="https://formsubmit.co/kenanemir53@gmail.com" method="POST" id="appointment-form">
+        
+        <input type="hidden" name="_next" value="">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="💖 YENİ BİR RANDEVU PLANI GELDİ!">
         
         <div id="step-1" class="step active unboxed">
             <h1 class="main-title">ÇIKALIM MI?</h1>
@@ -72,14 +75,11 @@
         const noBtn = document.getElementById('no-btn');
         const form = document.getElementById('appointment-form');
         
-        // Kaçan Buton Fonksiyonu
         function butonunKacmasi() {
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-            
             const randomX = Math.floor(Math.random() * Math.max(10, maxX));
             const randomY = Math.floor(Math.random() * Math.max(10, maxY));
-            
             noBtn.style.position = 'fixed';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
@@ -91,90 +91,68 @@
             butonunKacmasi();
         });
 
-        // 🍑 YENİ NESİL 3D ŞEFTALİ MOTORU
         let rainInterval;
-
         function seftaliYagmuru() {
-            // Yüksek çözünürlüklü 3D görünümlü şeftali resmi (Microsoft Fluent Emoji)
             const peachImgUrl = "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Food%20and%20Drink/Peach.png";
-            
             rainInterval = setInterval(() => {
                 for(let i=0; i<2; i++) {
                     const peach = document.createElement("img");
                     peach.src = peachImgUrl;
                     peach.style.position = "fixed";
-                    peach.style.top = "-100px"; // Ekranın hemen üstünden başlar
+                    peach.style.top = "-100px";
                     peach.style.zIndex = "9999";
                     peach.style.pointerEvents = "none";
-                    peach.style.filter = "drop-shadow(0px 15px 15px rgba(0,0,0,0.3))"; // Gerçekçi 3D gölge
-                    
-                    // Rastgele boyutlar
+                    peach.style.filter = "drop-shadow(0px 15px 15px rgba(0,0,0,0.3))";
                     const size = Math.random() * 50 + 50; 
                     peach.style.width = size + "px";
-                    
-                    // Rastgele yatay başlangıç pozisyonu
                     peach.style.left = (Math.random() * window.innerWidth) + "px";
-                    
                     document.body.appendChild(peach);
                     
-                    // Rastgele düşme süresi (4 ile 7 saniye arası) ve dönüş açısı
                     const fallDuration = Math.random() * 3000 + 4000;
                     const randomRotation = Math.floor(Math.random() * 500) * (Math.random() > 0.5 ? 1 : -1);
                     
-                    // JavaScript ile akıcı ve boyutlu süzülme animasyonu
                     const animation = peach.animate([
                         { transform: 'translateY(0) rotate(0deg)', opacity: 0 },
                         { opacity: 1, offset: 0.1 },
                         { opacity: 1, offset: 0.8 },
                         { transform: `translateY(${window.innerHeight + 200}px) rotate(${randomRotation}deg)`, opacity: 0 }
-                    ], {
-                        duration: fallDuration,
-                        easing: 'linear'
-                    });
-                    
-                    // Düştükten sonra tarayıcıyı yormamak için ekrandan sil
+                    ], { duration: fallDuration, easing: 'linear' });
                     animation.onfinish = () => peach.remove();
                 }
-            }, 300); // Yoğunluğu buradan ayarlayabilirsin (300ms)
+            }, 300);
         }
 
-        // Adımlar Arası Geçiş
         function nextStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => {
                 step.classList.remove('active');
             });
             document.getElementById('step-' + stepNumber).classList.add('active');
-
-            // 2. adıma geçildiğinde 3D şeftalileri başlat
-            if(stepNumber === 2 && !rainInterval) {
-                seftaliYagmuru(); 
-            }
+            if(stepNumber === 2 && !rainInterval) { seftaliYagmuru(); }
         }
 
-        // Kategori Seçimi
         function selectCategory(categoryName) {
             document.getElementById('selected-category').value = categoryName;
             nextStep(3);
         }
 
-        // Form Gönderme
+        // Formu Arka Planda Gönderme (FormSubmit Sürümü)
         form.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             
             const formData = new FormData(form);
+            const targetAction = form.getAttribute('action');
             
-            fetch('/', {
+            fetch(targetAction, {
                 method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
+                body: formData
             })
             .then(() => {
-                // Sona ulaştığında standart konfetiyle devasa final patlaması
                 confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
                 nextStep(4);
             })
-            .catch((error) => {
-                alert("Ufak bir hata oluştu dostum, tekrar dener misin?: " + error);
+            .catch(() => {
+                // FormSubmit ilk seferde bir doğrulama maili atabilir, arka planda sorun çıkarsa direkt yönlendiriyoruz
+                form.submit();
             });
         });
     </script>
