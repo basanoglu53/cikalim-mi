@@ -30,7 +30,7 @@
 
         <div id="step-2" class="step">
             <h1 class="main-title" style="font-size: 2.5rem;">WUHUHUHUHUHHUUH! 🥳</h1>
-            <h3 style="color: #e91e63; margin-bottom: 20px; font-size: 1.5rem;">Peki ne yapmak istersin?</h3>
+            <h3 style="color: #e91e63; margin-bottom: 25px; font-size: 1.5rem;">Peki ne yapmak istersin?</h3>
             
             <input type="hidden" name="kategori" id="selected-category" value="">
             
@@ -49,7 +49,7 @@
     <script>
         const noBtn = document.getElementById('no-btn');
         
-        // Kaçan Buton Fonksiyonu
+        // Kaçan Buton Fonksiyonu (Hem PC hem Telefon uyumlu)
         function butonunKacmasi() {
             const maxX = window.innerWidth - noBtn.offsetWidth - 20;
             const maxY = window.innerHeight - noBtn.offsetHeight - 20;
@@ -68,6 +68,35 @@
             butonunKacmasi();
         });
 
+        // 🍑 Emojiyi Şekil Olarak Tanımlıyoruz
+        const seftali = confetti.shapeFromText({ text: '🍑', scalar: 3 });
+
+        // Sürekli Aşağı Düşen Şeftali Yağmuru Fonksiyonu
+        function seftaliYagmuru() {
+            const duration = 6 * 1000; // 6 saniye boyunca şeftali yağacak
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 2, 
+                    angle: 270, // Yönü direkt aşağı doğru
+                    spread: 90,
+                    origin: { 
+                        x: Math.random(), // Rastgele yatay konum
+                        y: -0.1 // Ekranın hemen üstü
+                    },
+                    shapes: [seftali], 
+                    scalar: Math.random() * 1.5 + 1.5, // Rastgele boyutlar
+                    gravity: 0.8, // Düşme hızı
+                    ticks: 300 
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
         // Adımlar Arası Geçiş
         function nextStep(stepNumber) {
             document.querySelectorAll('.step').forEach(step => {
@@ -76,14 +105,14 @@
             document.getElementById('step-' + stepNumber).classList.add('active');
 
             if(stepNumber === 2) {
-                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+                seftaliYagmuru(); // "EVET"e basılınca şeftaliler yağmaya başlasın!
             }
         }
 
         // Kategori Seçme Fonksiyonu
         function selectCategory(categoryName) {
             document.getElementById('selected-category').value = categoryName;
-            alert("Seçtiğin kategori akılda tutuldu: " + categoryName + "\nŞimdi 3. adımı yapmaya hazırız!");
+            alert("Harika! Seçtiğin kategori akılda tutuldu: " + categoryName + "\nŞimdi son adım olan gün/saat panelini yapmaya hazırız!");
         }
     </script>
 </body>
