@@ -14,6 +14,7 @@ body {
     min-height: 100vh;
     text-align: center;
     overflow-x: hidden;
+    padding: 20px;
 }
 
 /* Adım Kontrolleri */
@@ -21,39 +22,43 @@ body {
     display: none;
     width: 100%;
     max-width: 450px;
-    padding: 30px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
     animation: fadeIn 0.4s ease-in-out;
-    margin: 15px;
 }
 
 .step.active {
     display: block;
 }
 
+/* Kutu/Şekil Efektini Tamamen Kaldıran Sınıf */
+.step.unboxed {
+    background: transparent;
+    box-shadow: none;
+    padding: 10px 0;
+}
+
 /* Başlıklar */
 .main-title {
-    font-size: 3rem;
+    font-size: 3.5rem;
     color: #e91e63;
     margin-bottom: 25px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-weight: 900;
 }
 
-/* Buton Düzenleri */
+/* İlk Ekran Buton Düzenleri */
 .buttons-wrapper {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
     align-items: center;
-    min-height: 80px;
+    min-height: 100px;
 }
 
 #yes-btn, #no-btn {
-    padding: 15px 35px;
-    font-size: 1.4rem;
+    padding: 18px 45px;
+    font-size: 1.6rem;
     font-weight: bold;
     border: none;
     border-radius: 50px;
@@ -64,62 +69,113 @@ body {
 #yes-btn {
     background-color: #4CAF50;
     color: white;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
 }
-
 #yes-btn:hover { transform: scale(1.1); }
 
 #no-btn {
     background-color: #f44336;
     color: white;
-    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
     z-index: 999;
 }
 
-/* Kategori Ekranı Butonları (2. ADIM) */
+/* 2. ADIM: Kategori Ekranı Devasa Canlı Butonları */
 .category-buttons {
     display: flex;
     flex-direction: column;
-    gap: 18px; /* Butonlar arası boşluk */
+    gap: 18px;
     align-items: center;
     margin-top: 25px;
 }
 
 .sub-btn {
     width: 100%;
-    padding: 22px; /* Devasa butonlar için iç boşluk */
-    font-size: 1.4rem; /* Büyük yazı */
-    font-weight: 800; /* Kalın yazı */
+    padding: 22px;
+    font-size: 1.4rem;
+    font-weight: 800;
     border: none;
     border-radius: 20px;
     color: white;
     cursor: pointer;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
-    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2); /* Hafif 3D gölge */
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* 1. Buton: Besle Beni (Sıcak Kırmızı-Pembe Geçişli) */
+/* Besle Beni Butonu (Kırmızı-Turuncu Degradeli) */
 .sub-btn:nth-child(1) {
     background: linear-gradient(135deg, #ff416c, #ff4b2b);
     box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
 }
-
-/* 2. Buton: Çay Kahve Tatlı (Canlı Turuncu-Sarı Geçişli) */
+/* Çay Kahve Tatlı Butonu (Turuncu-Sarı Degradeli) */
 .sub-btn:nth-child(2) {
     background: linear-gradient(135deg, #f12711, #f5af19);
     box-shadow: 0 8px 20px rgba(241, 39, 17, 0.4);
 }
-
-/* 3. Buton: Hepsi! (Efsanevi Mor-Pembe-Sarı Geçişli) */
+/* Hepsi Butonu (Mor-Pembe Degradeli) */
 .sub-btn:nth-child(3) {
     background: linear-gradient(135deg, #fc466b, #3f5efb);
     box-shadow: 0 8px 20px rgba(252, 70, 107, 0.4);
 }
 
-/* Butonların Üzerine Gelince Büyüme Efekti */
 .sub-btn:hover {
-    transform: scale(1.08) translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    transform: scale(1.06) translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* 3. ADIM: Gün ve Saat Giriş Alanları */
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.input-label {
+    font-weight: 700;
+    color: #e91e63;
+    margin-bottom: 8px;
+    margin-top: 18px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.input-field {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border: 3px solid #ffcad7;
+    border-radius: 15px;
+    outline: none;
+    background-color: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-field:focus {
+    border-color: #e91e63;
+    box-shadow: 0 0 10px rgba(233, 30, 99, 0.15);
+}
+
+/* Planı Tamamla Butonu */
+.submit-btn {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #11998e, #38ef7d); /* Canlı Yeşil Degrade */
+    color: white;
+    margin-top: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.submit-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(56, 239, 125, 0.5);
 }
 
 @keyframes fadeIn {
