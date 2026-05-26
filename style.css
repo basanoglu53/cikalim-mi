@@ -80,28 +80,46 @@ body {
 .category-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 18px; /* Butonlar arası boşluk */
     align-items: center;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .sub-btn {
     width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    padding: 22px; /* Devasa butonlar için iç boşluk */
+    font-size: 1.4rem; /* Büyük yazı */
+    font-weight: 800; /* Kalın yazı */
     border: none;
-    border-radius: 15px;
-    background-color: #e91e63;
+    border-radius: 20px;
     color: white;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    box-shadow: 0 4px 10px rgba(233, 30, 99, 0.2);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2); /* Hafif 3D gölge */
 }
 
+/* 1. Buton: Besle Beni (Sıcak Kırmızı-Pembe Geçişli) */
+.sub-btn:nth-child(1) {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+}
+
+/* 2. Buton: Çay Kahve Tatlı (Canlı Turuncu-Sarı Geçişli) */
+.sub-btn:nth-child(2) {
+    background: linear-gradient(135deg, #f12711, #f5af19);
+    box-shadow: 0 8px 20px rgba(241, 39, 17, 0.4);
+}
+
+/* 3. Buton: Hepsi! (Efsanevi Mor-Pembe-Sarı Geçişli) */
+.sub-btn:nth-child(3) {
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
+    box-shadow: 0 8px 20px rgba(252, 70, 107, 0.4);
+}
+
+/* Butonların Üzerine Gelince Büyüme Efekti */
 .sub-btn:hover {
-    transform: scale(1.03);
-    background-color: #c2185b;
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeIn {
