@@ -1,57 +1,80 @@
-body {
+/* Genel Sayfa Ayarları */
+* {
+    box-sizing: border-box;
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffeef2; /* Tatlı soft pembe */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    overflow: hidden;
-}
-
-#main-container {
+    min-height: 100vh;
     text-align: center;
+    overflow-x: hidden;
 }
 
-h1 {
-    font-size: 5rem;
-    color: #333;
-    margin-bottom: 2rem;
+/* Adım Kontrolleri */
+.step {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.buttons {
+.step.active {
+    display: block;
+}
+
+/* Başlık */
+.main-title {
+    font-size: 3.5rem;
+    color: #e91e63;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Buton Düzeni */
+.buttons-wrapper {
     display: flex;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
+    align-items: center;
+    min-height: 80px;
 }
 
-button {
-    padding: 15px 40px;
+#yes-btn, #no-btn {
+    padding: 15px 35px;
     font-size: 1.5rem;
-    cursor: pointer;
+    font-weight: bold;
     border: none;
     border-radius: 50px;
-    transition: transform 0.2s;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #yes-btn {
     background-color: #4CAF50;
     color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+#yes-btn:hover {
+    transform: scale(1.1);
 }
 
 #no-btn {
     background-color: #f44336;
     color: white;
-}@media (max-width: 600px) {
-    h1 {
-        font-size: 2.5rem !important;
-        margin-bottom: 1.5rem;
-    }
-    button {
-        padding: 12px 30px !important;
-        font-size: 1.2rem !important;
-    }
-    .buttons {
-        gap: 15px;
-    }
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+    z-index: 999;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
